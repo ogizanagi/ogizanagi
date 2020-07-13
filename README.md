@@ -1,16 +1,39 @@
-### Hi there 👋
+```php
+class Kernel extends SymfonyKernel implements EventSubscriberInterface
+{
+    use MicroKernelTrait;
 
-<!--
-**ogizanagi/ogizanagi** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+    public function onKernelException(ExceptionEvent $event): void
+    {
+        if ($event->getThrowable() instanceof Danger) {
+            $event->setResponse(new Response("It's dangerous to go alone. Take this ⚔️"));
+        }
+    }
 
-Here are some ideas to get you started:
+    public function bowtiesAction(): Response
+    {
+        return new Response('I wear a fez now. Fezzes are cool!');
+    }
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+    public function dangerousAction(): Response
+    {
+        throw new Danger();
+    }
+
+    protected function configureRoutes(RoutingConfigurator $routes): void
+    {
+        $routes->add('bowties', '/bowties')->controller('kernel::bowtiesAction');
+        $routes->add('danger', '/danger')->controller('kernel::dangerousAction');
+    }
+    
+    public function registerBundles(): iterable
+    {
+        return [new FrameworkBundle()];
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [KernelEvents::EXCEPTION => 'onKernelException'];
+    }
+}
+```
