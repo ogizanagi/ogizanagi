@@ -3,13 +3,6 @@ class Kernel extends SymfonyKernel implements EventSubscriberInterface
 {
     use MicroKernelTrait;
 
-    public function onKernelException(ExceptionEvent $event): void
-    {
-        if ($event->getThrowable() instanceof Danger) {
-            $event->setResponse(new Response("It's dangerous to go alone. Take this ⚔️"));
-        }
-    }
-
     public function bowtiesAction(): Response
     {
         return new Response('I wear a fez now. Fezzes are cool!');
@@ -17,7 +10,14 @@ class Kernel extends SymfonyKernel implements EventSubscriberInterface
 
     public function dangerousAction(): Response
     {
-        throw new Danger();
+        throw new Danger('🔥🔥 😈🐷 🔱🔺 🔥🔥');
+    }
+
+    public function onKernelException(ExceptionEvent $event): void
+    {
+        if ($event->getThrowable() instanceof Danger) {
+            $event->setResponse(new Response("👴🏻: It's dangerous to go alone. Take this: 🗡️"));
+        }
     }
 
     protected function configureRoutes(RoutingConfigurator $routes): void
