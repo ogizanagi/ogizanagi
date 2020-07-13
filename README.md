@@ -25,11 +25,6 @@ class Kernel extends SymfonyKernel implements EventSubscriberInterface
         $routes->add('bowties', '/bowties')->controller('kernel::bowtiesAction');
         $routes->add('danger', '/danger')->controller('kernel::dangerousAction');
     }
-    
-    public function registerBundles(): iterable
-    {
-        return [new FrameworkBundle()];
-    }
 
     public static function getSubscribedEvents(): array
     {
