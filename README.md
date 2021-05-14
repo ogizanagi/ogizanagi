@@ -5,7 +5,7 @@ class Kernel extends SymfonyKernel implements EventSubscriberInterface
 
     public function bowtiesAction(): Response
     {
-        return new Response('I wear a fez now. Fezzes are cool!');
+        return new RedirectResponse('I wear a fez now. Fezzes are cool!');
     }
 
     public function dangerousAction(): Response
